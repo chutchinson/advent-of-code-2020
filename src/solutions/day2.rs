@@ -1,15 +1,15 @@
 use crate::prelude::*;
 
-type Validator = fn(usize, usize, char, &str) -> bool;
+type Validator = fn(Range<usize>, char, &str) -> bool;
 
-fn check_1(a: usize, b: usize, letter: char, value: &str) -> bool {
+fn check_1(range: Range<usize>, letter: char, value: &str) -> bool {
     let count = value.matches(letter).count();
-    count >= a && count <= b
+    range.contains(&count)
 }
 
-fn check_2(a: usize, b: usize, letter: char, value: &str) -> bool {
-    let first = value.as_bytes()[a - 1] as char;
-    let second = value.as_bytes()[b - 1] as char;
+fn check_2(range: Range<usize>, letter: char, value: &str) -> bool {
+    let first = value.chars().nth(range.start - 1).unwrap();
+    let second = value.chars().nth(range.end - 2).unwrap();
     (first == letter || second == letter) && first != second
 }
 
@@ -18,9 +18,9 @@ fn validate(line: &str, predicate: Validator) -> Option<bool> {
     let mut range = parts.next()?.split('-');
     let min = range.next()?.parse::<usize>().ok()?;
     let max = range.next()?.parse::<usize>().ok()?;
-    let letter = parts.next()?.as_bytes()[0] as char;
+    let letter = parts.next()?.chars().nth(0)?;
     let password = parts.next()?;
-    Some(predicate(min, max, letter, password))
+    Some(predicate(min..max+1, letter, password))
 }
 
 pub fn solve(ctx: &mut Context) -> Result {
