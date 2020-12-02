@@ -6,8 +6,9 @@ use context::{Context, Solution};
 use solutions::*;
 
 fn main() {
-    let solutions = vec![
-        (1, day1::solve)
+    let solutions: Vec<(usize, Solution)> = vec![
+        (1, day1::solve),
+        (2, day2::solve)
     ];
 
     let result = solutions.into_iter()

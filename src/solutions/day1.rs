@@ -13,7 +13,7 @@ pub fn solve(ctx: &mut Context) -> Result {
         .map(|line| line.unwrap())
         .map(|x| x.parse::<i32>().unwrap())
         .collect();
-
+    
     let n = find_expense(&expenses, 2);
     writeln!(ctx, "{}", n);
 
