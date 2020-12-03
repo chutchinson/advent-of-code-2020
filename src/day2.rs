@@ -9,8 +9,13 @@ fn main() {
         .filter_map(Result::ok)
         .collect_vec();
 
-    println!("{}", passwords.iter().filter(|p| validate(&p, policy_1) == Some(true)).count());
-    println!("{}", passwords.iter().filter(|p| validate(&p, policy_2) == Some(true)).count());
+    println!("{}", passwords.iter()
+        .filter(|p| validate(&p, policy_1) == Some(true))
+        .count());
+
+    println!("{}", passwords.iter()
+        .filter(|p| validate(&p, policy_2) == Some(true))
+        .count());
 }
 
 fn policy_1(range: Range<usize>, letter: char, value: &str) -> Option<bool> {

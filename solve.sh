@@ -1,1 +1,2 @@
-cat inputs/$1.txt | cargo run --bin day$1
+cargo build --release --quiet
+time cat inputs/$1.txt | ./target/release/day$1
