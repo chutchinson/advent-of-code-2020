@@ -2,8 +2,7 @@ mod prelude;
 use prelude::*;
 
 fn bsp(range: Range<usize>, spec: &str) -> usize {
-     spec.chars()
-        .fold(range, |x, ch| {
+     spec.chars().fold(range, |x, ch| {
             let n = (x.end - x.start) / 2;
             match ch {
                 'F' | 'L' => x.start..x.end - n - 1,
@@ -21,13 +20,9 @@ fn parse(spec: &str) -> (usize, usize, usize) {
 }
 
 fn main() {
-    let rows = stdin().lock()
-        .lines()
+    let assignments = stdin().lock().lines()
         .filter_map(Result::ok)
-        .collect_vec();
-
-    let assignments = rows.iter()
-        .map(|line| parse(line).2)
+        .map(|line| parse(&line).2)
         .sorted()
         .collect_vec();
 

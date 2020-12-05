@@ -11,7 +11,7 @@ lazy_static! {
     static ref PID: Regex = Regex::new(r#"^[0-9]{9}$"#).unwrap();
 }
 
-fn valid_hgt(value: &str) -> Option<bool> {
+fn validate_hgt(value: &str) -> Option<bool> {
     let captures = HGT.captures_iter(value).next()?;
     let value = captures[1].parse::<usize>().ok()?;
     let unit = &captures[2];
@@ -33,7 +33,7 @@ fn main() {
                 .flatten()
                 .collect::<HashMap<_, _>>()
         })
-        .collect::<Vec<_>>();
+        .collect_vec();
 
     let count = records.iter()
         .filter(|record| ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"].iter().all(|x| record.contains_key(*x)))
@@ -47,10 +47,10 @@ fn main() {
             valid &= record.get("byr")?.parse::<isize>().ok().map(|v| v >= 1920 && v <= 2002)?;
             valid &= record.get("iyr")?.parse::<isize>().ok().map(|v| v >= 2010 && v <= 2020)?;
             valid &= record.get("eyr")?.parse::<isize>().ok().map(|v| v >= 2020 && v <= 2030)?;
-            valid &= valid_hgt(record.get("hgt")?)?;
-            valid &= HCL.is_match(record.get("hcl")?);
-            valid &= PID.is_match(record.get("pid")?);
-            valid &= ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&record.get("ecl")?);
+            valid &= record.get("hgt").and_then(|v| validate_hgt(v))?;
+            valid &= record.get("hcl").map(|v| HCL.is_match(v))?;
+            valid &= record.get("pid").map(|v| PID.is_match(v))?;
+            valid &= record.get("ecl").map(|v| ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&v.as_str()))?;
             Some(valid)
         })
         .filter(|x| *x == Some(true))
