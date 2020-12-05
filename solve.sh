@@ -1,2 +1,4 @@
 cargo build --release --quiet
-time cat inputs/$1.txt | ./target/release/day$1
+if [ $? -eq 0 ]; then
+  time cat inputs/$1.txt | ./target/release/day$1
+fi
