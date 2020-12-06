@@ -24,7 +24,7 @@ fn main() {
 
     let min_seat_id = assignments.first().unwrap();
     let seat_id = (min_seat_id+1..max_seat_id-1)
-        .find(|id| !assignments.contains(id))
+        .find(|id| assignments.binary_search(&id).is_err())
         .unwrap();
 
     println!("{}", seat_id);
