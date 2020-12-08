@@ -4,3 +4,6 @@
 
 /target
 /inputs
+
+*.dot
+*.log

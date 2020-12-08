@@ -8,7 +8,7 @@ edition = "2018"
 itertools = "0.9.0"
 lazy_static = "1.4.0"
 regex = "1.4.2"
-bitvec = ""
+petgraph = "0.5.1"
 
 [[bin]]
 name = "day1"
@@ -33,3 +33,11 @@ path = "src/day5.rs"
 [[bin]]
 name = "day6"
 path = "src/day6.rs"
+
+[[bin]]
+name = "day7"
+path = "src/day7.rs"
+
+[[bin]]
+name = "day8"
+path = "src/day8.rs"
