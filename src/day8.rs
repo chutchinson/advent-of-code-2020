@@ -29,8 +29,8 @@ fn patch_and_execute(program: &Vec<Instruction>, acc: &mut isize) -> bool {
     for index in 0..count {
         *acc = 0;
         let mut program = program.clone();
-        let mut instruction = &mut program[index];
-        instruction.0 = if instruction.0 == "nop" { "jmp" } else { "nop" };
+        let (ref mut op, _) = program[index];
+        *op = if *op == "nop" { "jmp" } else { "nop" };
         if execute(&program, acc) {
             return true;
         }
