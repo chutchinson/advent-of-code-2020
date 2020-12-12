@@ -32,10 +32,8 @@ fn find_encryption_weakness(data: &Vec<usize>, invalid: usize) -> Option<usize> 
 }
 
 fn main() {
-    let mut data = String::new();
-    let _ = stdin().lock().read_to_string(&mut data);
-
-    let n = data.lines()
+    let n = stdin().lock().lines()
+        .filter_map(Result::ok)
         .map(|line| line.parse::<usize>().unwrap())
         .collect_vec();
 
